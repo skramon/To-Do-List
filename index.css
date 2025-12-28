@@ -62,8 +62,14 @@ header input {
     width: calc(25%-12px);
     background-color: white;
     padding: 16px;
-    border-radius: 10px;
+    border-radius: 8px;
     margin: 12px;
+    box-shadow: 0 5px 10px #00000015;
+}
+#tarefas ul li h5 {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: blueviolet;
 }
 
 #overlay {
