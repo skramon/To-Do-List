@@ -8,6 +8,9 @@
     outline: none;
     font-family: Arial, Helvetica, sans-serif;
 }
+body {
+    background-color: #E0E0E0;
+}
 
 header {
     background-color: blueviolet;
@@ -48,6 +51,19 @@ header input {
     text-align: center;
     font-size: 24px;
     color: gray;
+}
+#tarefas ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 36px;
+}
+#tarefas ul li {
+    width: calc(25%-12px);
+    background-color: white;
+    padding: 16px;
+    border-radius: 10px;
+    margin: 12px;
 }
 
 #overlay {
