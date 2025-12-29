@@ -1,9 +1,3 @@
 {
-    "tarefas": [
-        {
-            "titulo": "Titulo da tarefa",
-            "descricao": "fazer tal coisa"
-        }
-        
-    ]
+  "tarefas": []
 }

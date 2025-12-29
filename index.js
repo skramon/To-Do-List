@@ -1,4 +1,4 @@
-function novaTarefa(){
+function abriModal(){
     overlay.classList.add('active');
     criarTarefa.classList.add('active');
 }
@@ -9,6 +9,7 @@ function fecharModal(){
 }
 
 function buscarTarefas(){
+    Lista.innerHTML = '';
     fetch('http://localhost:3000/tarefas')
     .then(res => res.json())
     .then(res => {
@@ -26,11 +27,19 @@ function adicionarTarefa(listaDeTarefas){
                 <h5>${tarefa.titulo}</h5>
                 <p> ${tarefa.descricao}</p>
                 <div class="actions">
-                    <box-icon name='trash' size='smcs'></box-icon>
+                    <box-icon name='trash' size='smcs' onclick="deletarTarefa(${tarefa.id})"></box-icon>
                 </div>
             </li>
             `;
         })
+    }
+
+    const contador = document.getElementById("contador");
+    const qtd = Lista.children.length;
+    if (qtd > 0) {
+        contador.innerText = `${qtd} Tarefas registradas`;
+    } else {
+        contador.innerText = "Nenhuma tarefa registrada";
     }
 }
 
@@ -40,14 +49,57 @@ function salvarTarefa(novaTarefa) {
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
 }
 
-function alternarTema() {
-    document.body.classList.toggle('dark-mode');
-    const tema = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-    localStorage.setItem('tema', tema);
+function novaTarefa(){
+    event.preventDefault();
+
+    let tarefa = {
+        titulo: titulo.value,
+        descricao: descricao.value,
+    };
+
+   fetch("http://localhost:3000/tarefas",
+   {
+       method: "POST",
+       headers: {
+           "Content-Type": "application/json"
+       },
+       body: JSON.stringify(tarefa)
+   })
+   .then(res => res.json())
+   .then(res => {
+       console.log(res);
+       fecharModal();
+       buscarTarefas();
+       let fomr = document.querySelector("#criarTarefa form");
+       fomr.reset();
+   })
 }
 
-// Verifica a preferência salva ao carregar
-const temaSalvo = localStorage.getItem('tema');
-if (temaSalvo === 'dark') {
-    document.body.classList.add('dark-mode');
+function deletarTarefa(id){
+    fetch(`http://localhost:3000/tarefas/${id}`,
+    {
+        method: "DELETE",
+    })
+    .then(res => res.json())
+    .then(res => {
+        buscarTarefas();
+    })
+}
+
+function pesquisarTarefa(){
+    let lis = document.querySelectorAll("ul li");
+    if(busca.value.length > 0){
+        lis.forEach(li => {
+            if (!li.children[0].innerText.includes(busca.value)){
+                li.classList.add("oculto");
+            }else{
+                li.classList.remove("oculto");
+            }
+        })
+    } else {
+        lis.forEach(li => {
+            li.classList.remove("oculto");
+        })
+    }
+
 }
