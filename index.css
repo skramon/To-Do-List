@@ -72,6 +72,18 @@ header input {
     color: blueviolet;
 }
 
+#tarefas ul li .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    fill: #999;
+}
+#tarefas ul li .actions box-icon:hover {
+    fill: blueviolet;
+}
+
 #overlay {
     position: fixed;
     top: 0;
