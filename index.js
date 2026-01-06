@@ -82,6 +82,68 @@ function deletarTarefa(id){
     })
     .then(res => res.json())
     .then(res => {
+ function alternarTema() {
+     const body = document.body;
+     const btnTema = document.getElementById('btn-tema');
+     
+     // Alterna a classe dark-mode
+     body.classList.toggle('dark-mode');
+     
+     const isDarkMode = body.classList.contains('dark-mode');
+     
+     // Troca o ícone: sol para dark mode, lua para light mode
+     if (isDarkMode) {
+ function alternarTema() {
+     const body = document.body;
+     const btnTema = document.getElementById('btn-tema');
+     
+     // Alterna a classe dark-mode
+     body.classList.toggle('dark-mode');
+     
+     const isDarkMode = body.classList.contains('dark-mode');
+     
+     // Troca o ícone: sol para dark mode, lua para light mode
+     if (isDarkMode) {
+         btnTema.setAttribute('name', 'sun');
+         localStorage.setItem('tema', 'dark');
+     } else {
+         btnTema.setAttribute('name', 'moon');
+         localStorage.setItem('tema', 'light');
+     }
+ }
+ 
+ // Verifica a preferência salva ao carregar a página
+ document.addEventListener('DOMContentLoaded', () => {
+     const temaSalvo = localStorage.getItem('tema');
+     const btnTema = document.getElementById('btn-tema');
+     
+     if (temaSalvo === 'dark') {
+         document.body.classList.add('dark-mode');
+         if (btnTema) btnTema.setAttribute('name', 'sun');
+     }
+ });
+         btnTema.setAttribute('name', 'sun');
+         localStorage.setItem('tema', 'dark');
+     } else {
+         btnTema.setAttribute('name', 'moon');
+         localStorage.setItem('tema', 'light');
+     }
+ }
+ 
+ // Verifica a preferência salva ao carregar a página
+ document.addEventListener('DOMContentLoaded', () => {
+     const temaSalvo = localStorage.getItem('tema');
+     const btnTema = document.getElementById('btn-tema');
+     
+     if (temaSalvo === 'dark') {
+         document.body.classList.add('dark-mode');
+         if (btnTema) btnTema.setAttribute('name', 'sun');
+     }
+
+ }
+
+ }
+ });
         buscarTarefas();
     })
 }
