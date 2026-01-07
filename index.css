@@ -14,15 +14,20 @@ body {
 
 header {
     background-color: blueviolet;
-    padding: 16px 120px;
+    padding: 24px 120px;
     text-align: center;
 }
 header input {
     width: 100%;
-    height: 60%;
-    padding: 0 10px;
-    border-radius: 8px;
+    height: 50px;
+    padding: 0 14px;
+    border-radius: 10px;
     font-size: 18px;
+    border: 2px solid transparent;
+    transition: 0.2s;
+}
+header input:focus {
+    border-color: indigo;
 }
 #tarefas {
     padding: 60px 120px;
@@ -34,18 +39,19 @@ header input {
     font-size: 48px;
 }
 #tarefas h2 button {
-    padding: 8px 16px;
-    font-size: 18px;
-    border-radius: 8px;
-    background-color: blueviolet;
+    background: blueviolet;
     color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
     cursor: pointer;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition-duration: 200ms;
+    transition: 0.2s;
+    font-size: 18px;
+    font-weight: bold;
 }
 #tarefas h2 button:hover {
     background-color: indigo;
+    opacity: 0.85;
 }
 #tarefas h6 {
     text-align: center;
@@ -59,22 +65,25 @@ header input {
     margin-top: 36px;
 }
 #tarefas ul li {
-    width: calc(25%-12px);
+    width: calc(25% - 16px);
     background-color: white;
-    padding: 16px;
-    border-radius: 8px;
-    margin: 12px;
-    box-shadow: 0 5px 10px #00000015;
-    display: initial;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px #00000018;
+    transition: 0.2s;
 }
+#tarefas ul li:hover {
+  transform: translateY(-4px);
+}
+
 #tarefas ul li.oculto
 {
     display: none;
 }
 
 #tarefas ul li h5 {
-    font-size: 16px;
-    margin-bottom: 16px;
+    font-size: 18px;
+    margin-bottom: 12px;
     color: blueviolet;
 }
 
@@ -125,6 +134,16 @@ header input {
 .modal.active {
     visibility: visible;
     opacity: 1;
+    animation: scaleIn 0.2s ease; 
+}
+
+@keyframes scaleIn {
+    from {
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
 
 .modal form h3 {
@@ -188,4 +207,33 @@ header input {
 }
 .modal form button:hover {
     background-color: indigo;
+}
+
+@media (max-width: 1024px) {
+    #tarefas ul li {
+        width: calc(50% - 16px);
+    }
+}
+
+@media (max-width: 600px) {
+    header,
+    #tarefas {
+        padding: 24px;
+    }
+
+    #tarefas h2 {
+        font-size: 32px;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    #tarefas ul li {
+        width: 100%;
+        margin: 0;
+    }
+
+    .modal {
+        width: 90%;
+    }
 }

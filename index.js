@@ -1,167 +1,99 @@
-function abriModal(){
-    overlay.classList.add('active');
-    criarTarefa.classList.add('active');
+const Lista = document.getElementById("Lista");
+const titulo = document.getElementById("titulo");
+const descricao = document.getElementById("descricao");
+const busca = document.getElementById("busca");
+const overlay = document.getElementById("overlay");
+const criarTarefa = document.getElementById("criarTarefa");
+const mensagemVazia = document.getElementById("mensagemVazia");
+
+// ================= MODAL =================
+function abriModal() {
+    overlay.classList.add("active");
+    criarTarefa.classList.add("active");
 }
 
-function fecharModal(){
-    overlay.classList.remove('active');
-    criarTarefa.classList.remove('active');
+function fecharModal() {
+    overlay.classList.remove("active");
+    criarTarefa.classList.remove("active");
 }
 
-function buscarTarefas(){
-    Lista.innerHTML = '';
-    fetch('http://localhost:3000/tarefas')
-    .then(res => res.json())
-    .then(res => {
-        adicionarTarefa(res);
-    })
-    const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
-    adicionarTarefa(tarefas);
-} buscarTarefas();
+// ================= LOCAL STORAGE =================
+function getTarefas() {
+    return JSON.parse(localStorage.getItem("tarefas")) || [];
+}
 
-function adicionarTarefa(listaDeTarefas){
-    if(listaDeTarefas.length > 0){
-        listaDeTarefas.map(tarefa => {
-            Lista.innerHTML += `
+function setTarefas(tarefas) {
+    localStorage.setItem("tarefas", JSON.stringify(tarefas));
+}
+
+// ================= LISTAR =================
+function buscarTarefas() {
+    Lista.innerHTML = "";
+
+    const tarefas = getTarefas();
+
+    if (tarefas.length === 0) {
+        mensagemVazia.style.display = "block";
+        return;
+    }
+
+    mensagemVazia.style.display = "none";
+
+    tarefas.forEach(tarefa => {
+        Lista.innerHTML += `
             <li>
                 <h5>${tarefa.titulo}</h5>
-                <p> ${tarefa.descricao}</p>
+                <p>${tarefa.descricao}</p>
                 <div class="actions">
-                    <box-icon name='trash' size='smcs' onclick="deletarTarefa(${tarefa.id})"></box-icon>
+                    <box-icon 
+                        name="trash" 
+                        size="sm"
+                        onclick="deletarTarefa(${tarefa.id})">
+                    </box-icon>
                 </div>
             </li>
-            `;
-        })
-    }
-
-    const contador = document.getElementById("contador");
-    const qtd = Lista.children.length;
-    if (qtd > 0) {
-        contador.innerText = `${qtd} Tarefas registradas`;
-    } else {
-        contador.innerText = "Nenhuma tarefa registrada";
-    }
+        `;
+    });
 }
 
-function salvarTarefa(novaTarefa) {
-    const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
-    tarefas.push(novaTarefa);
-    localStorage.setItem('tarefas', JSON.stringify(tarefas));
-}
+buscarTarefas();
 
-function novaTarefa(){
+// ================= CRIAR =================
+function novaTarefa(event) {
     event.preventDefault();
 
-    let tarefa = {
+    const tarefas = getTarefas();
+
+    const tarefa = {
+        id: Date.now(), // ID único
         titulo: titulo.value,
-        descricao: descricao.value,
+        descricao: descricao.value
     };
 
-   fetch("http://localhost:3000/tarefas",
-   {
-       method: "POST",
-       headers: {
-           "Content-Type": "application/json"
-       },
-       body: JSON.stringify(tarefa)
-   })
-   .then(res => res.json())
-   .then(res => {
-       console.log(res);
-       fecharModal();
-       buscarTarefas();
-       let fomr = document.querySelector("#criarTarefa form");
-       fomr.reset();
-   })
+    tarefas.push(tarefa);
+    setTarefas(tarefas);
+
+    fecharModal();
+    buscarTarefas();
+
+    document.querySelector("#criarTarefa form").reset();
 }
 
-function deletarTarefa(id){
-    fetch(`http://localhost:3000/tarefas/${id}`,
-    {
-        method: "DELETE",
-    })
-    .then(res => res.json())
-    .then(res => {
- function alternarTema() {
-     const body = document.body;
-     const btnTema = document.getElementById('btn-tema');
-     
-     // Alterna a classe dark-mode
-     body.classList.toggle('dark-mode');
-     
-     const isDarkMode = body.classList.contains('dark-mode');
-     
-     // Troca o ícone: sol para dark mode, lua para light mode
-     if (isDarkMode) {
- function alternarTema() {
-     const body = document.body;
-     const btnTema = document.getElementById('btn-tema');
-     
-     // Alterna a classe dark-mode
-     body.classList.toggle('dark-mode');
-     
-     const isDarkMode = body.classList.contains('dark-mode');
-     
-     // Troca o ícone: sol para dark mode, lua para light mode
-     if (isDarkMode) {
-         btnTema.setAttribute('name', 'sun');
-         localStorage.setItem('tema', 'dark');
-     } else {
-         btnTema.setAttribute('name', 'moon');
-         localStorage.setItem('tema', 'light');
-     }
- }
- 
- // Verifica a preferência salva ao carregar a página
- document.addEventListener('DOMContentLoaded', () => {
-     const temaSalvo = localStorage.getItem('tema');
-     const btnTema = document.getElementById('btn-tema');
-     
-     if (temaSalvo === 'dark') {
-         document.body.classList.add('dark-mode');
-         if (btnTema) btnTema.setAttribute('name', 'sun');
-     }
- });
-         btnTema.setAttribute('name', 'sun');
-         localStorage.setItem('tema', 'dark');
-     } else {
-         btnTema.setAttribute('name', 'moon');
-         localStorage.setItem('tema', 'light');
-     }
- }
- 
- // Verifica a preferência salva ao carregar a página
- document.addEventListener('DOMContentLoaded', () => {
-     const temaSalvo = localStorage.getItem('tema');
-     const btnTema = document.getElementById('btn-tema');
-     
-     if (temaSalvo === 'dark') {
-         document.body.classList.add('dark-mode');
-         if (btnTema) btnTema.setAttribute('name', 'sun');
-     }
-
- }
-
- }
- });
-        buscarTarefas();
-    })
+// ================= DELETAR =================
+function deletarTarefa(id) {
+    let tarefas = getTarefas();
+    tarefas = tarefas.filter(tarefa => tarefa.id !== id);
+    setTarefas(tarefas);
+    buscarTarefas();
 }
 
-function pesquisarTarefa(){
-    let lis = document.querySelectorAll("ul li");
-    if(busca.value.length > 0){
-        lis.forEach(li => {
-            if (!li.children[0].innerText.includes(busca.value)){
-                li.classList.add("oculto");
-            }else{
-                li.classList.remove("oculto");
-            }
-        })
-    } else {
-        lis.forEach(li => {
-            li.classList.remove("oculto");
-        })
-    }
+// ================= BUSCAR =================
+function pesquisarTarefa() {
+    const texto = busca.value.toLowerCase();
+    const lis = document.querySelectorAll("#Lista li");
 
+    lis.forEach(li => {
+        const titulo = li.querySelector("h5").innerText.toLowerCase();
+        li.classList.toggle("oculto", !titulo.includes(texto));
+    });
 }

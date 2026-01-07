@@ -2,36 +2,53 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Tarefas</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+
     <header>
-        <input type="text" id="busca"  onkeyup="pesquisarTarefa()" placeholder="pesquisar por titulo">
-        <box-icon name='moon' id="btn-tema" onclick="alternarTema()" style="cursor: pointer; margin-left: 15px;"></box-icon>
+        <input
+          type="text"
+          id="busca"
+          placeholder="Pesquisar por título"
+          onkeyup="pesquisarTarefa()"
+        >
     </header>
+
     <main>
         <section id="tarefas">
-            <h2>Tarefas <button onclick="abriModal()">nova tarefa</button></h2>
-           <h6>Nenhuma tarefa registrada</h6>
-           <ul id="Lista"></ul>
+            <h2>
+                Tarefas
+                <button onclick="abriModal()">Nova tarefa</button>
+            </h2>
 
+            <h6 id="mensagemVazia">Nenhuma tarefa registrada</h6>
+            <ul id="Lista"></ul>
         </section>
+
         <section id="overlay" onclick="fecharModal()"></section>
+
         <div id="criarTarefa" class="modal">
-             <form onsubmit="novaTarefa()">
-                <h3>Criar tarefa <box-icon name='x-circle' size='md' onclick="fecharModal()"></box-icon></h3>
-                <label for="titulo">Titulo</label>
+            <form onsubmit="novaTarefa(event)">
+                <h3>
+                    Criar tarefa
+                    <box-icon name="x-circle" size="md" onclick="fecharModal()"></box-icon>
+                </h3>
+
+                <label for="titulo">Título</label>
                 <input type="text" id="titulo" required>
+
                 <label for="descricao">Descrição</label>
                 <textarea id="descricao" required></textarea>
-                <button>Criar</button>
-             </form>
+
+                <button type="submit">Criar</button>
+            </form>
         </div>
     </main>
-     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-     <script src="index.js"></script>
 
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
